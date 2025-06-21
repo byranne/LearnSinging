@@ -8,6 +8,7 @@ CHANNELS = 1
 RATE = 44100
 CHUNK = 1024
 RECORD_SECONDS = 5 
+THRESHOLD = 300
 
 audioChannel = pyaudio.PyAudio()
 
@@ -22,11 +23,11 @@ try:
         volume = np.linalg.norm(audio_data)
         
         if volume > THRESHOLD:
-            print("🔊 Sound detected! Volume:", int(volume))
+            print("Sound detected! Volume:", int(volume))
         else:
-            print("...")  # Silence
+            print("No Sound")  
 except KeyboardInterrupt:
-    print("\n🔚 Stopping.")
+            print("Stopping")
 
 stream.stop_stream()
 stream.close()
