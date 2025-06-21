@@ -1,6 +1,4 @@
-import numrosa
 import pyaudio
-import wave 
 import numpy as np
 
 FORMAT = pyaudio.paInt16
@@ -31,4 +29,4 @@ except KeyboardInterrupt:
 
 stream.stop_stream()
 stream.close()
-p.terminate()
+audioChannel.terminate()
