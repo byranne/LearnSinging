@@ -4,6 +4,8 @@ import numpy as np
 import math
 import os
 
+from collections import deque
+
 def freq_to_note_name(frequency):
 
     NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -35,7 +37,9 @@ print("Listening")
 
 pitchDetector = aubio.pitch("yinfft", win_s, hop_s, samplerate)
 pitchDetector.set_unit("Hz")
-pitchDetector.set_silence(-40)
+pitchDetector.set_silence(-35)
+
+pitchHistory = deque(maxlen=5)
 
 try:
     while True:
@@ -44,7 +48,9 @@ try:
         audio_data = audio_data.astype(np.float32) / 32768.0
         pitch = pitchDetector(audio_data)[0]
         if pitch > 0:
-            note = freq_to_note_name(pitch)
+            pitchHistory.append(pitch)
+            smoothedPitch = sum(pitchHistory) / len(pitchHistory)
+            note = freq_to_note_name(smoothedPitch)
             os.system("clear")
             print(f"Detected pitch: {pitch:.2f} Hz, Note: {note}")
 
