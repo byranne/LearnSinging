@@ -1,9 +1,11 @@
-import './App.css'
-
-export default function App() {
+function App() {
   return (
-    <div className="text-3xl font-bold text-blue-500 p-4">
-      ✅ Tailwind is working!
+    <>
+    <div className="bg-green-500 text-green-700">
+    Hello Tailwind!
     </div>
-  );
+    </>
+  )
 }
+
+export default App;
